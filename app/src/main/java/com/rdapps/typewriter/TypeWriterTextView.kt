@@ -8,9 +8,14 @@ class TypeWriterTextView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null
 ) : AppCompatTextView(context, attrs), TypeWriter by TypeWriterImpl() {
 
-    override var text: String
-        get() = getText().toString()
-        set(value) {
-            setText(value)
-        }
+    init {
+        setupTextCallback(
+            setText = {
+                text = it
+            },
+            getText = {
+                text.toString()
+            }
+        )
+    }
 }

@@ -8,9 +8,15 @@ class TypeWriterEditText @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null
 ) : AppCompatEditText(context, attrs), TypeWriter by TypeWriterImpl() {
 
-    override var text: String
-        get() = getText()?.toString() ?: ""
-        set(value) {
-            setText(value)
-        }
+    init {
+        setupTextCallback(
+            setText = {
+                setText(it)
+                setSelection(it.length)
+            },
+            getText = {
+                text?.toString() ?: ""
+            }
+        )
+    }
 }

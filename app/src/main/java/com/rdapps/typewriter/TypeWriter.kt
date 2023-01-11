@@ -7,10 +7,10 @@ interface TypeWriter {
 
     var speed: Long
     var autoAppendText: Boolean
-    var text: String
 
     var appendCharAtEnd: Char
 
+    fun setupTextCallback(setText: (String) -> Unit, getText: () -> String)
     fun animateText(txt: CharSequence, startDelay: Long = 0)
     fun animateLoadingDots(startDelay: Long = 0)
     fun stopLoadingAnimation()
@@ -20,12 +20,20 @@ class TypeWriterImpl : TypeWriter {
 
     private var bufferText: CharSequence = ""
     private var index = 0
+    private var setText: (String) -> Unit = {}
+    private var getText: () -> String = { "" }
+    private var text
+        get() = getText()
+        set(value) = setText(value)
 
     override var speed: Long = 40 // in ms
     override var autoAppendText: Boolean = false
     override var appendCharAtEnd: Char = ' '
 
-    override var text: String = ""
+    override fun setupTextCallback(setText: (String) -> Unit, getText: () -> String) {
+        this.setText = setText
+        this.getText = getText
+    }
 
     private val mHandler: Handler = Handler(Looper.getMainLooper())
     private val characterAdder = object : Runnable {
