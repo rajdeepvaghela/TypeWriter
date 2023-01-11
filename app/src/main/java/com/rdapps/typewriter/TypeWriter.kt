@@ -11,7 +11,7 @@ interface TypeWriter {
     var appendCharAtEnd: Char
 
     fun setupTextCallback(setText: (String) -> Unit, getText: () -> String)
-    fun animateText(txt: CharSequence, startDelay: Long = 0)
+    fun animateText(txt: CharSequence, startDelay: Long = 0, onComplete: () -> Unit)
     fun animateLoadingDots(startDelay: Long = 0)
     fun stopLoadingAnimation()
 }
@@ -29,6 +29,7 @@ class TypeWriterImpl : TypeWriter {
     override var speed: Long = 40 // in ms
     override var autoAppendText: Boolean = false
     override var appendCharAtEnd: Char = ' '
+    private var onComplete: () -> Unit = {}
 
     override fun setupTextCallback(setText: (String) -> Unit, getText: () -> String) {
         this.setText = setText
@@ -41,6 +42,9 @@ class TypeWriterImpl : TypeWriter {
             if (index < bufferText.length) {
                 text = text.plus(bufferText[index++])
                 mHandler.postDelayed(this, speed)
+            } else {
+                mHandler.removeCallbacks(this)
+                onComplete()
             }
         }
     }
@@ -56,7 +60,7 @@ class TypeWriterImpl : TypeWriter {
         }
     }
 
-    override fun animateText(txt: CharSequence, startDelay: Long) {
+    override fun animateText(txt: CharSequence, startDelay: Long, onComplete: () -> Unit) {
         if (!autoAppendText) {
             text = ""
         }
@@ -65,6 +69,7 @@ class TypeWriterImpl : TypeWriter {
         mHandler.removeCallbacks(dotAnimator)
         mHandler.removeCallbacks(characterAdder)
         mHandler.postDelayed(characterAdder, startDelay)
+        this.onComplete = onComplete
     }
 
     override fun animateLoadingDots(startDelay: Long) {
