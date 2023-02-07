@@ -3,9 +3,7 @@
 [![Release](https://img.shields.io/github/v/release/rajdeepvaghela/TypeWriter)](https://github.com/rajdeepvaghela/MotionText/releases)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
-
-If you use a simple TextView in MotionLayout for textSize transitions, the animation won't be smooth. Here MotionText will solve the issue, as internally 
-it will convert text to Image and during transition only the image is resized. It also have a few out of the box design attributes.
+This is lightweight library for performing TypeWriter animation. It contains two views `TypeWriterTextView` and `TypeWriterEditText`. Also it has built in three dot(...) animation.
 
 ## Installation
 Add it in your root build.gradle at the end of repositories:
