@@ -11,7 +11,7 @@ interface TypeWriter {
     var appendCharAtEnd: Char
 
     fun setupTextCallback(setText: (String) -> Unit, getText: () -> String)
-    fun animateText(txt: CharSequence, startDelay: Long = 0, onComplete: () -> Unit)
+    fun animateText(txt: CharSequence, startDelay: Long = 0, onComplete: () -> Unit = {})
     fun animateLoadingDots(startDelay: Long = 0)
     fun stopLoadingAnimation()
 }
