@@ -5,6 +5,10 @@
 
 This is lightweight library for performing TypeWriter animation. It contains two views `TypeWriterTextView` and `TypeWriterEditText`. Also it has built in three dot(...) animation.
 
+<div align="center">
+<img src="demo.gif" />
+</div>
+
 ## Installation
 Add it in your root build.gradle at the end of repositories:
 ```gradle
