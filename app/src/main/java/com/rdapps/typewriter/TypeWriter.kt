@@ -14,6 +14,7 @@ interface TypeWriter {
     fun animateText(txt: CharSequence, startDelay: Long = 0, onComplete: () -> Unit = {})
     fun animateLoadingDots(startDelay: Long = 0)
     fun stopLoadingAnimation()
+    fun stopAnimation()
 }
 
 class TypeWriterImpl : TypeWriter {
@@ -78,5 +79,10 @@ class TypeWriterImpl : TypeWriter {
 
     override fun stopLoadingAnimation() {
         mHandler.removeCallbacks(dotAnimator)
+    }
+
+    override fun stopAnimation() {
+        mHandler.removeCallbacks(dotAnimator)
+        mHandler.removeCallbacks(characterAdder)
     }
 }
