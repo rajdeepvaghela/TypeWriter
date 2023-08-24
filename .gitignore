@@ -1,6 +1,7 @@
 *.iml
 .gradle
 /local.properties
+/.idea
 /.idea/compiler.xml
 /.idea/misc.xml
 /.idea/kotlinc.xml
