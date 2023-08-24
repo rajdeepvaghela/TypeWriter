@@ -44,6 +44,7 @@ For EditText you can use
 to start animation
 ```kotlin
 typeWriter.speed = 10 // to set the custom speed for animation
+typeWriter.appendStringAtEnd = "|" // to append a string during animation
 typeWriter.animateText("A long text which needs to be animated", startDelay = 500) {
     // do after complition
 }
