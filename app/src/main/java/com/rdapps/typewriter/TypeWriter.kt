@@ -51,6 +51,7 @@ class TypeWriterImpl : TypeWriter {
             } else {
                 mHandler.removeCallbacks(this)
                 onComplete()
+                text = text.removeSuffix(appendStringAtEnd.toString())
             }
         }
     }
