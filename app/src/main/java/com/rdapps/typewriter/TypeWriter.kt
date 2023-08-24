@@ -44,14 +44,15 @@ class TypeWriterImpl : TypeWriter {
                 text = if (appendStringAtEnd == null)
                     text.plus(bufferText[index++])
                 else {
-                    val currentText = text.removeSuffix(appendStringAtEnd.toString())
+                    val currentText = text.removeSuffix(appendStringAtEnd!!)
                     currentText.plus(bufferText[index++]).plus(appendStringAtEnd)
                 }
                 mHandler.postDelayed(this, speed)
             } else {
                 mHandler.removeCallbacks(this)
                 onComplete()
-                text = text.removeSuffix(appendStringAtEnd.toString())
+                if (appendStringAtEnd != null)
+                    text = text.removeSuffix(appendStringAtEnd!!)
             }
         }
     }
