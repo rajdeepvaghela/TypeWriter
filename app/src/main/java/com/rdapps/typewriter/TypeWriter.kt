@@ -8,7 +8,7 @@ interface TypeWriter {
     var speed: Long
     var autoAppendText: Boolean
 
-    var appendCharAtEnd: Char
+    var appendStringAtEnd: String?
 
     fun setupTextCallback(setText: (String) -> Unit, getText: () -> String)
     fun animateText(txt: CharSequence, startDelay: Long = 0, onComplete: () -> Unit = {})
@@ -29,7 +29,7 @@ class TypeWriterImpl : TypeWriter {
 
     override var speed: Long = 40 // in ms
     override var autoAppendText: Boolean = false
-    override var appendCharAtEnd: Char = ' '
+    override var appendStringAtEnd: String? = null
     private var onComplete: () -> Unit = {}
 
     override fun setupTextCallback(setText: (String) -> Unit, getText: () -> String) {
@@ -41,7 +41,12 @@ class TypeWriterImpl : TypeWriter {
     private val characterAdder = object : Runnable {
         override fun run() {
             if (index < bufferText.length) {
-                text = text.plus(bufferText[index++])
+                text = if (appendStringAtEnd == null)
+                    text.plus(bufferText[index++])
+                else {
+                    val currentText = text.removeSuffix(appendStringAtEnd.toString())
+                    currentText.plus(bufferText[index++]).plus(appendStringAtEnd)
+                }
                 mHandler.postDelayed(this, speed)
             } else {
                 mHandler.removeCallbacks(this)
@@ -52,10 +57,10 @@ class TypeWriterImpl : TypeWriter {
 
     private val dotAnimator = object : Runnable {
         override fun run() {
-            if (text.contains("...")) {
-                text = text.replace("...", "")
+            text = if (text.contains("...")) {
+                text.replace("...", "")
             } else {
-                text = text.plus(".")
+                text.plus(".")
             }
             mHandler.postDelayed(this, speed)
         }
