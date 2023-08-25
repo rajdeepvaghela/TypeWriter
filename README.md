@@ -22,7 +22,7 @@ allprojects {
 Add the dependency
 ```gradle
 dependencies {
-    implementation 'com.github.rajdeepvaghela:TypeWriter:1.0.4'
+    implementation 'com.github.rajdeepvaghela:TypeWriter:1.0.7'
 }
 ```
 ## Usage
